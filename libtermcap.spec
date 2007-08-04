@@ -1,10 +1,11 @@
 %define name	libtermcap
 %define version	2.0.8
-%define release	%mkrel 40
+%define release	%mkrel 41
 
-%define lib_major	2
-%define lib_name_orig	libtermcap
-%define lib_name	%mklibname termcap %{lib_major}
+%define major		2
+%define libname_orig	libtermcap
+%define libname		%mklibname termcap %{major}
+%define develname	%mklibname termcap -d
 
 Summary:	A basic system library for accessing the termcap database
 Name:		%{name}
@@ -12,23 +13,23 @@ Version:	%{version}
 Release:	%{release}
 Source:		termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
-License:	LGPL
+License:	LGPL+
 Group:		System/Libraries
 
-Patch0:		termcap-2.0.8-shared.patch.bz2
-Patch1:		termcap-2.0.8-setuid.patch.bz2
-Patch2:		termcap-2.0.8-instnoroot.patch.bz2
-Patch3:		termcap-2.0.8-compat21.patch.bz2
-Patch4:		termcap-2.0.8-xref.patch.bz2
-Patch5:		termcap-2.0.8-fix-tc.patch.bz2
-Patch6:		termcap-2.0.8-ignore-p.patch.bz2
-Patch7:		termcap-buffer.patch.bz2
+Patch0:		termcap-2.0.8-shared.patch
+Patch1:		termcap-2.0.8-setuid.patch
+Patch2:		termcap-2.0.8-instnoroot.patch
+Patch3:		termcap-2.0.8-compat21.patch
+Patch4:		termcap-2.0.8-xref.patch
+Patch5:		termcap-2.0.8-fix-tc.patch
+Patch6:		termcap-2.0.8-ignore-p.patch
+Patch7:		termcap-buffer.patch
 # This patch is a REALLY BAD IDEA without patch #10 below....
-Patch8:		termcap-2.0.8-bufsize.patch.bz2
-Patch9:		termcap-2.0.8-colon.patch.bz2
-Patch10:	libtermcap-aaargh.patch.bz2
+Patch8:		termcap-2.0.8-bufsize.patch
+Patch9:		termcap-2.0.8-colon.patch
+Patch10:	libtermcap-aaargh.patch
 # (gc) conflicting definition of `bcopy' against latest glibc 2.1.95
-Patch11:	termcap-fix-glibc-2.2.patch.bz2
+Patch11:	termcap-fix-glibc-2.2.patch
 
 Requires:	%_sysconfdir/termcap
 Requires(posttrans):	ldconfig glibc
@@ -42,27 +43,28 @@ the termcap database.  The termcap library supports easy access to the
 termcap database, so that programs can output character-based displays in
 a terminal-independent manner.
 
-%package -n %{lib_name}
+%package -n %{libname}
 Summary:        Development tools for programs which will access the termcap database
 Group:          System/Libraries
-Obsoletes:	%{lib_name_orig}
-Provides:	%{lib_name_orig}
+Obsoletes:	%{libname_orig}
+Provides:	%{libname_orig}
 
-%description -n %{lib_name}
+%description -n %{libname}
 The libtermcap package contains a basic system library needed to access
 the termcap database.  The termcap library supports easy access to the
 termcap database, so that programs can output character-based displays in
 a terminal-independent manner.
 
-%package -n %{lib_name}-devel
+%package -n %{develname}
 Summary:	Development tools for programs which will access the termcap database
 Group:		Development/C
-Requires:	%{lib_name} = %version
-Obsoletes:	%{lib_name_orig}-devel
-Provides:	%{lib_name_orig}-devel = %{version}-%{release}
+Requires:	%{libname} = %version
+Obsoletes:	%{libname_orig}-devel
+Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	termcap-devel = %{version}-%{release}
+Obsoletes:	%{mklibname termcap 2 -d}
 
-%description -n %{lib_name}-devel
+%description -n %{develname}
 This package includes the libraries and header files necessary for
 developing programs which will access the termcap database.
 
@@ -117,28 +119,28 @@ rm -f $RPM_BUILD_ROOT%_sysconfdir/termcap
 rm -fr %buildroot
 
 # pixel: KEEP LDCONFIG WITH "-p" OR COME TALK TO ME 
-%posttrans -n %{lib_name} -p /sbin/ldconfig
-%postun -n %{lib_name} -p /sbin/ldconfig
+%posttrans -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%post -n %{lib_name}-devel
+%post -n %{develname}
 /sbin/install-info \
 	--section="Libraries" --entry="* Termcap: (termcap).               The GNU termcap library." \
 	--info-dir=%{_infodir} %{_infodir}/termcap.info.bz2
 
-%postun -n %{lib_name}-devel
+%postun -n %{develname}
 if [ $1 = 0 ]; then
     /sbin/install-info --delete \
 	--section="Libraries" --entry="* Termcap: (termcap).               The GNU termcap library." \
 	--info-dir=%{_infodir} %{_infodir}/termcap.info.bz2
 fi
 
-%files -n %{lib_name}
+%files -n %{libname}
 %defattr(-,root,root)
-%doc ChangeLog README
 /%{_lib}/*.so.*
 
-%files -n %{lib_name}-devel
+%files -n %{develname}
 %defattr(-,root,root)
+%doc ChangeLog README
 /%{_lib}/*.so
 %{_infodir}/termcap.info*
 %_libdir/libtermcap.a
