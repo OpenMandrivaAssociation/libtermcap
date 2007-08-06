@@ -1,6 +1,6 @@
 %define name	libtermcap
 %define version	2.0.8
-%define release	%mkrel 41
+%define release	%mkrel 42
 
 %define major		2
 %define libname_orig	libtermcap
@@ -59,7 +59,6 @@ a terminal-independent manner.
 Summary:	Development tools for programs which will access the termcap database
 Group:		Development/C
 Requires:	%{libname} = %version
-Obsoletes:	%{libname_orig}-devel
 Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	termcap-devel = %{version}-%{release}
 Obsoletes:	%{mklibname termcap 2 -d}
