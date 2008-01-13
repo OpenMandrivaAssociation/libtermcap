@@ -1,6 +1,6 @@
 %define name	libtermcap
 %define version	2.0.8
-%define release	%mkrel 43
+%define release	%mkrel 44
 
 %define major		2
 %define libname_orig	libtermcap
