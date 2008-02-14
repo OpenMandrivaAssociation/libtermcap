@@ -15,6 +15,7 @@ Source:		termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
 Group:		System/Libraries
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Patch0:		termcap-2.0.8-shared.patch
 Patch1:		termcap-2.0.8-setuid.patch
