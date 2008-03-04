@@ -1,6 +1,5 @@
 %define name	libtermcap
 %define version	2.0.8
-%define release	%mkrel 44
 
 %define major		2
 %define libname_orig	libtermcap
@@ -10,7 +9,7 @@
 Summary:	A basic system library for accessing the termcap database
 Name:		%{name}
 Version:	%{version}
-Release:	%{release}
+Release:	%mkrel 45
 Source:		termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
