@@ -113,8 +113,12 @@ install -m 644 termcap.src %{buildroot}%{_sysconfdir}/termcap
 rm -f %{buildroot}%{_sysconfdir}/termcap
 
 # pixel: KEEP LDCONFIG WITH "-p" OR COME TALK TO ME 
+%if %mdkversion < 200900
 %posttrans -n %{libname} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %post -n %{develname}
 /sbin/install-info \
