@@ -9,7 +9,7 @@
 Summary:	A basic system library for accessing the termcap database
 Name:		%{name}
 Version:	%{version}
-Release:	%mkrel 46
+Release:	%mkrel 47
 Source:		termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
@@ -30,7 +30,7 @@ Patch9:		termcap-2.0.8-colon.patch
 Patch10:	libtermcap-aaargh.patch
 # (gc) conflicting definition of `bcopy' against latest glibc 2.1.95
 Patch11:	termcap-fix-glibc-2.2.patch
-
+Patch12:	termcap-2.0.8-LDFLAGS.diff
 Requires:	termcap
 Requires(posttrans):	ldconfig glibc
 Requires(postun):	ldconfig
@@ -84,9 +84,10 @@ libtermcap package.
 %patch9 -p1 -b .colon
 %patch10 -p1 -b .aaargh
 %patch11 -p0
+%patch12 -p0
 
 %build
-%make CFLAGS="$RPM_OPT_FLAGS -I."
+%make CFLAGS="%{optflags} -I." LDFLAGS="%{ldflags}"
 
 %install
 rm -rf %{buildroot}
