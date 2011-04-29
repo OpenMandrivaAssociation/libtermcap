@@ -9,7 +9,7 @@
 Summary:	A basic system library for accessing the termcap database
 Name:		%{name}
 Version:	%{version}
-Release:	%mkrel 50
+Release:	%mkrel 51
 Source:		termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
