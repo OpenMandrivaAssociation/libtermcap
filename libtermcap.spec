@@ -1,21 +1,15 @@
-%define name	libtermcap
-%define version	2.0.8
-
-%define major		2
-%define libname_orig	libtermcap
-%define libname		%mklibname termcap %{major}
-%define develname	%mklibname termcap -d
+%define major 2
+%define libname %mklibname termcap %{major}
+%define develname %mklibname termcap -d
 
 Summary:	A basic system library for accessing the termcap database
-Name:		%{name}
-Version:	%{version}
-Release:	%mkrel 51
+Name:		libtermcap
+Version:	2.0.8
+Release:	52
 Source:		termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
 Group:		System/Libraries
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-
 Patch0:		termcap-2.0.8-shared.patch
 Patch1:		termcap-2.0.8-setuid.patch
 Patch2:		termcap-2.0.8-instnoroot.patch
@@ -32,8 +26,6 @@ Patch10:	libtermcap-aaargh.patch
 Patch11:	termcap-fix-glibc-2.2.patch
 Patch12:	termcap-2.0.8-LDFLAGS.diff
 Requires:	termcap
-Requires(posttrans):	ldconfig glibc
-Requires(postun):	ldconfig
 BuildRequires:	texinfo
 
 %description
@@ -45,8 +37,6 @@ a terminal-independent manner.
 %package -n	%{libname}
 Summary:	Development tools for programs which will access the termcap database
 Group:		System/Libraries
-Obsoletes:	%{libname_orig}
-Provides:	%{libname_orig}
 
 %description -n	%{libname}
 The libtermcap package contains a basic system library needed to access
@@ -57,8 +47,7 @@ a terminal-independent manner.
 %package -n	%{develname}
 Summary:	Development tools for programs which will access the termcap database
 Group:		Development/C
-Requires:	%{libname} = %version
-Provides:	%{libname_orig}-devel = %{version}-%{release}
+Requires:	%{libname} >= %{version}-%{release}
 Provides:	termcap-devel = %{version}-%{release}
 Obsoletes:	%{mklibname termcap 2 -d}
 
@@ -113,13 +102,8 @@ install -m 644 termcap.src %{buildroot}%{_sysconfdir}/termcap
 
 rm -f %{buildroot}%{_sysconfdir}/termcap
 
-# pixel: KEEP LDCONFIG WITH "-p" OR COME TALK TO ME 
-%if %mdkversion < 200900
-%posttrans -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
+# cleanup
+rm -f %{buildroot}%{_libdir}/libtermcap.a
 
 %post -n %{develname}
 /sbin/install-info \
@@ -134,14 +118,11 @@ if [ $1 = 0 ]; then
 fi
 
 %files -n %{libname}
-%defattr(-,root,root)
 /%{_lib}/*.so.*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc ChangeLog README
 /%{_lib}/*.so
 %{_infodir}/termcap.info*
-%{_libdir}/libtermcap.a
 %{_libdir}/libtermcap.so
 %{_includedir}/termcap.h
