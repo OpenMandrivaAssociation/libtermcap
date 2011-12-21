@@ -5,7 +5,7 @@
 Summary:	A basic system library for accessing the termcap database
 Name:		libtermcap
 Version:	2.0.8
-Release:	52
+Release:	53
 Source:		termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
@@ -108,13 +108,13 @@ rm -f %{buildroot}%{_libdir}/libtermcap.a
 %post -n %{develname}
 /sbin/install-info \
 	--section="Libraries" --entry="* Termcap: (termcap).               The GNU termcap library." \
-	--info-dir=%{_infodir} %{_infodir}/termcap.info%{_extension}
+	--info-dir=%{_infodir} %{_infodir}/termcap.info%{_extension} 2>/dev/null || :
 
 %postun -n %{develname}
 if [ $1 = 0 ]; then
     /sbin/install-info --delete \
 	--section="Libraries" --entry="* Termcap: (termcap).               The GNU termcap library." \
-	--info-dir=%{_infodir} %{_infodir}/termcap.info%{_extension}
+	--info-dir=%{_infodir} %{_infodir}/termcap.info%{_extension} 2>/dev/null || :
 fi
 
 %files -n %{libname}
@@ -126,3 +126,4 @@ fi
 %{_infodir}/termcap.info*
 %{_libdir}/libtermcap.so
 %{_includedir}/termcap.h
+
