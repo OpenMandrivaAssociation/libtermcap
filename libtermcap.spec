@@ -5,8 +5,8 @@
 Summary:	A basic system library for accessing the termcap database
 Name:		libtermcap
 Version:	2.0.8
-Release:	53
-Source:		termcap-%{version}.tar.bz2
+Release:	54
+Source0:	termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
 Group:		System/Libraries
@@ -34,7 +34,7 @@ the termcap database.  The termcap library supports easy access to the
 termcap database, so that programs can output character-based displays in
 a terminal-independent manner.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Development tools for programs which will access the termcap database
 Group:		System/Libraries
 
@@ -44,7 +44,7 @@ the termcap database.  The termcap library supports easy access to the
 termcap database, so that programs can output character-based displays in
 a terminal-independent manner.
 
-%package -n	%{develname}
+%package -n %{develname}
 Summary:	Development tools for programs which will access the termcap database
 Group:		Development/C
 Requires:	%{libname} >= %{version}-%{release}
@@ -79,7 +79,6 @@ libtermcap package.
 %make CFLAGS="%{optflags} -I." LDFLAGS="%{ldflags}"
 
 %install
-rm -rf %{buildroot}
 # (gb) They should do proper Makefiles
 
 mkdir -p %{buildroot}/%{_lib}
@@ -118,7 +117,7 @@ if [ $1 = 0 ]; then
 fi
 
 %files -n %{libname}
-/%{_lib}/*.so.*
+/%{_lib}/*.so.%{major}*
 
 %files -n %{develname}
 %doc ChangeLog README
@@ -126,4 +125,3 @@ fi
 %{_infodir}/termcap.info*
 %{_libdir}/libtermcap.so
 %{_includedir}/termcap.h
-
