@@ -1,0 +1,19 @@
+--- Makefile	2008-12-25 19:31:19.000000000 +0100
++++ Makefile.oden	2008-12-25 19:32:48.000000000 +0100
+@@ -10,6 +10,7 @@
+ CC=gcc
+ CFLAGS=-O -I. -g
+ CFLAGS=-O -I.
++LDFLAGS = 
+ 
+ AR=ar
+ ARFLAGS=ucvr
+@@ -41,7 +42,7 @@
+ 
+ $(SHARED_LIB): $(OBJS)
+ 	cd pic; \
+-	$(CC) -shared -o ../$@ -Wl,-soname,$(SONAME_SHARED_LIB) $(OBJS) -lc
++	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o ../$@ -Wl,-soname,$(SONAME_SHARED_LIB) $(OBJS) -lc
+ 
+ pic:
+ 	-if [ ! -d pic ]; then mkdir pic; fi
