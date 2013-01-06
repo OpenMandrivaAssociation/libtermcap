@@ -84,34 +84,26 @@ libtermcap package.
 # (gb) They should do proper Makefiles
 
 mkdir -p %{buildroot}/%{_lib}
-install -m 755 libtermcap.so.* %{buildroot}/%{_lib}/
-ln -s libtermcap.so.2.0.8 %{buildroot}/%{_lib}/libtermcap.so
-ln -s libtermcap.so.2.0.8 %{buildroot}/%{_lib}/libtermcap.so.2
+install -m 755 libtermcap.so.%{major}.* %{buildroot}/%{_lib}/
+ln -sr %{buildroot}/%{_lib}/libtermcap.so.%{major}.* %{buildroot}/%{_lib}/libtermcap.so.2
 
-mkdir -p %{buildroot}%{_libdir}
-install -m 644 libtermcap.a %{buildroot}%{_libdir}/
-ln -s ../../%{_lib}/libtermcap.so.2.0.8 %{buildroot}%{_libdir}/libtermcap.so
+install -m644 libtermcap.a -D %{buildroot}%{_libdir}/libtermcap.a
+ln -sr %{buildroot}/%{_lib}/libtermcap.so.%{major}.* %{buildroot}%{_libdir}/libtermcap.so
 
 mkdir -p %{buildroot}%{_infodir}
-install -m 644 termcap.info* %{buildroot}%{_infodir}/
+install -m644 termcap.info* %{buildroot}%{_infodir}/
 
 mkdir -p %{buildroot}%{_includedir}
-install -m 644 termcap.h %{buildroot}%{_includedir}
-
-mkdir -p %{buildroot}%{_sysconfdir}
-install -m 644 termcap.src %{buildroot}%{_sysconfdir}/termcap
-
-rm -f %{buildroot}%{_sysconfdir}/termcap
+install -m644 termcap.h -D %{buildroot}%{_includedir}/termcap.h
 
 # cleanup
 rm -f %{buildroot}%{_libdir}/libtermcap.a
 
 %files -n %{libname}
-/%{_lib}/*.so.%{major}*
+/%{_lib}/libtermcap.so.%{major}*
 
 %files -n %{devname}
 %doc ChangeLog README
-/%{_lib}/*.so
 %{_infodir}/termcap.info*
 %{_libdir}/libtermcap.so
 %{_includedir}/termcap.h
