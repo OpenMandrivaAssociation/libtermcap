@@ -1,11 +1,11 @@
-%define major 2
-%define libname %mklibname termcap %{major}
-%define develname %mklibname termcap -d
+%define	major	2
+%define	libname	%mklibname termcap %{major}
+%define	devname	%mklibname termcap -d
 
 Summary:	A basic system library for accessing the termcap database
 Name:		libtermcap
 Version:	2.0.8
-Release:	54
+Release:	55
 Source0:	termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
@@ -34,7 +34,7 @@ the termcap database.  The termcap library supports easy access to the
 termcap database, so that programs can output character-based displays in
 a terminal-independent manner.
 
-%package -n %{libname}
+%package -n	%{libname}
 Summary:	Development tools for programs which will access the termcap database
 Group:		System/Libraries
 
@@ -44,14 +44,14 @@ the termcap database.  The termcap library supports easy access to the
 termcap database, so that programs can output character-based displays in
 a terminal-independent manner.
 
-%package -n %{develname}
+%package -n	%{devname}
 Summary:	Development tools for programs which will access the termcap database
 Group:		Development/C
 Requires:	%{libname} >= %{version}-%{release}
 Provides:	termcap-devel = %{version}-%{release}
 Obsoletes:	%{mklibname termcap 2 -d}
 
-%description -n	%{develname}
+%description -n	%{devname}
 This package includes the libraries and header files necessary for
 developing programs which will access the termcap database.
 
@@ -60,7 +60,7 @@ you'll need to install this package.  You'll also need to install the
 libtermcap package.
 
 %prep
-%setup -q -n termcap-2.0.8
+%setup -q -n termcap-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1 -b .nochown
@@ -104,12 +104,12 @@ rm -f %{buildroot}%{_sysconfdir}/termcap
 # cleanup
 rm -f %{buildroot}%{_libdir}/libtermcap.a
 
-%post -n %{develname}
+%post -n %{devname}
 /sbin/install-info \
 	--section="Libraries" --entry="* Termcap: (termcap).               The GNU termcap library." \
 	--info-dir=%{_infodir} %{_infodir}/termcap.info%{_extension} 2>/dev/null || :
 
-%postun -n %{develname}
+%postun -n %{devname}
 if [ $1 = 0 ]; then
     /sbin/install-info --delete \
 	--section="Libraries" --entry="* Termcap: (termcap).               The GNU termcap library." \
@@ -119,7 +119,7 @@ fi
 %files -n %{libname}
 /%{_lib}/*.so.%{major}*
 
-%files -n %{develname}
+%files -n %{devname}
 %doc ChangeLog README
 /%{_lib}/*.so
 %{_infodir}/termcap.info*
