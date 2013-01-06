@@ -80,7 +80,6 @@ libtermcap package.
 %make CFLAGS="%{optflags} -I." LDFLAGS="%{ldflags}"
 
 %install
-rm -rf %{buildroot}
 # (gb) They should do proper Makefiles
 
 mkdir -p %{buildroot}/%{_lib}
