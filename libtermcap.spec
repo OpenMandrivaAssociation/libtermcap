@@ -25,6 +25,7 @@ Patch10:	libtermcap-aaargh.patch
 # (gc) conflicting definition of `bcopy' against latest glibc 2.1.95
 Patch11:	termcap-fix-glibc-2.2.patch
 Patch12:	termcap-2.0.8-LDFLAGS.diff
+Patch13:	termcap-2.0.8-add-info-dir-metadata-to-info-page.patch
 BuildRequires:	texinfo
 
 %description
@@ -74,6 +75,7 @@ libtermcap package.
 %patch10 -p1 -b .aaargh
 %patch11 -p0
 %patch12 -p0
+%patch13 -p1 -b .infometa~
 
 %build
 %make CFLAGS="%{optflags} -I." LDFLAGS="%{ldflags}"
@@ -103,18 +105,6 @@ rm -f %{buildroot}%{_sysconfdir}/termcap
 
 # cleanup
 rm -f %{buildroot}%{_libdir}/libtermcap.a
-
-%post -n %{devname}
-/sbin/install-info \
-	--section="Libraries" --entry="* Termcap: (termcap).               The GNU termcap library." \
-	--info-dir=%{_infodir} %{_infodir}/termcap.info%{_extension} 2>/dev/null || :
-
-%postun -n %{devname}
-if [ $1 = 0 ]; then
-    /sbin/install-info --delete \
-	--section="Libraries" --entry="* Termcap: (termcap).               The GNU termcap library." \
-	--info-dir=%{_infodir} %{_infodir}/termcap.info%{_extension} 2>/dev/null || :
-fi
 
 %files -n %{libname}
 /%{_lib}/*.so.%{major}*
