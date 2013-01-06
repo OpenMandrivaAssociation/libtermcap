@@ -25,7 +25,6 @@ Patch10:	libtermcap-aaargh.patch
 # (gc) conflicting definition of `bcopy' against latest glibc 2.1.95
 Patch11:	termcap-fix-glibc-2.2.patch
 Patch12:	termcap-2.0.8-LDFLAGS.diff
-Requires:	termcap
 BuildRequires:	texinfo
 
 %description
@@ -37,6 +36,7 @@ a terminal-independent manner.
 %package -n	%{libname}
 Summary:	Development tools for programs which will access the termcap database
 Group:		System/Libraries
+Requires:	termcap
 
 %description -n	%{libname}
 The libtermcap package contains a basic system library needed to access
