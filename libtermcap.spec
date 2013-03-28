@@ -77,7 +77,7 @@ libtermcap package.
 %patch13 -p1 -b .infometa~
 
 %build
-%make CFLAGS="%{optflags} -I." LDFLAGS="%{ldflags}"
+%make CFLAGS="%{optflags} -I." LDFLAGS="%{ldflags}" CC=%{__cc}
 
 %install
 # (gb) They should do proper Makefiles
