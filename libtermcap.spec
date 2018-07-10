@@ -5,7 +5,7 @@
 Summary:	A basic system library for accessing the termcap database
 Name:		libtermcap
 Version:	2.0.8
-Release:	67
+Release:	68
 Source0:	termcap-%{version}.tar.bz2
 Url:		ftp://metalab.unc.edu/pub/Linux/GCC/
 License:	LGPL+
